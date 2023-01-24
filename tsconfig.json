@@ -25,7 +25,8 @@
         "**/*.tsx",
         "src/*",
         ".eslintrc.json",
-        "next.config.js"
+        "next.config.js",
+        "postcss.config.js",
     ],
     "exclude": ["node_modules"]
 }
