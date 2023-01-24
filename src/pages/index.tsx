@@ -1,4 +1,10 @@
 import Head from 'next/head'
+import { Inter } from '@next/font/google'
+
+const inter = Inter({
+    subsets: ['latin'],
+    variable: '--font-inter',
+})
 
 export default function Home() {
     return (
@@ -15,7 +21,7 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main>
+            <main className={`${inter.variable} font-sans` }>
                 <h1>Hello World!</h1>
                 <p>Test - Are we hot reloading</p>
             </main>
