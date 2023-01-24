@@ -1,12 +1,14 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 
+import MainNavigation from '@/components/layout/navigation/MainNavigation'
+
 const inter = Inter({
     subsets: ['latin'],
     variable: '--font-inter',
 })
 
-export default function Home() {
+const Home = () => {
     return (
         <>
             <Head>
@@ -21,10 +23,12 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className={`${inter.variable} font-sans` }>
-                <h1>Hello World!</h1>
-                <p>Test - Are we hot reloading</p>
+            <main className={`${inter.variable} font-sans`}>
+                <MainNavigation />
             </main>
+            <footer className='bg-red-400 w-full h-6' />
         </>
     )
 }
+
+export default Home
