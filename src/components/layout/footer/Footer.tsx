@@ -65,7 +65,7 @@ const navigation = [
 ]
 
 type PropTypes = {
-    className?: string;
+    className?: string
 }
 
 const Footer = ({ className }: PropTypes) => {
@@ -92,10 +92,6 @@ const Footer = ({ className }: PropTypes) => {
             </div>
         </footer>
     )
-}
-
-Footer.defaultProps = {
-    className: '',
 }
 
 export default Footer

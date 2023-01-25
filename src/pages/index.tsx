@@ -24,9 +24,8 @@ const Home = () => {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className={`${inter.variable} font-sans`}>
-                <MainNavigation />
-            </main>
+            <MainNavigation className={`${inter.variable} font-sans`} />
+            <main className={`${inter.variable} font-sans`}>CONTENT</main>
             <Footer className={`${inter.variable} font-sans`} />
         </>
     )
