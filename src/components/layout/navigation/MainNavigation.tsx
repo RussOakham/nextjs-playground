@@ -5,7 +5,7 @@ import useWindowDimension from '@/hooks/useWindowDimension'
 import CompanyLogo from './CompanyLogo'
 import NotificationButton from './NotificationButton'
 import ProfileButton from './ProfileButton'
-import NavMenu from './NavMenu'
+import NavMenu from './desktop/NavMenu'
 import MobileHamburger from './mobile/MobileHamburger'
 import MobileMenuNav from './mobile/MobileMenuNav'
 
