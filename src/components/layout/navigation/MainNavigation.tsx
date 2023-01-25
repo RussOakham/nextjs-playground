@@ -1,11 +1,11 @@
 import { Disclosure } from '@headlessui/react'
 
 import CompanyLogo from './CompanyLogo'
-import NavLink from './NavLink'
 import NotificationButton from './NotificationButton'
 import ProfileButton from './ProfileButton'
-import MobileHamburger from './MobileHamburger'
-import MobileMenuNav from './MobileMenuNav'
+import NavMenu from './NavMenu'
+import MobileHamburger from './mobile/MobileHamburger'
+import MobileMenuNav from './mobile/MobileMenuNav'
 
 const navigation = [
     { name: 'Dashboard', href: '#', current: true },
@@ -30,16 +30,7 @@ const MainNavigation = ({ className }: PropTypes) => {
                             <MobileHamburger open={open} />
                             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                                 <CompanyLogo />
-                                <div className="hidden sm:ml-6 sm:block">
-                                    <div className="flex space-x-4">
-                                        {navigation.map((item) => (
-                                            <NavLink
-                                                key={item.name}
-                                                item={item}
-                                            />
-                                        ))}
-                                    </div>
-                                </div>
+                                <NavMenu navigation={navigation} />
                             </div>
                             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                 {displayNotificationButton && (
