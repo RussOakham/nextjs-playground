@@ -10,13 +10,13 @@ import MobileHamburger from './mobile/MobileHamburger'
 import MobileMenuNav from './mobile/MobileMenuNav'
 
 const navigation = [
-    { name: 'Dashboard', href: '#', current: true },
+    { name: 'Dashboard', href: '/', current: true },
     { name: 'Blog', href: '/blog', current: false },
 ]
 
 const authLinks = [
     { name: 'Login', href: '/login', current: false },
-    { name: 'Register', href: '/register', current: false },
+    { name: 'Register', href: '/register', current: true },
 ]
 
 type PropTypes = {

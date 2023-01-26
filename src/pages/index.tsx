@@ -1,13 +1,4 @@
 import Head from 'next/head'
-import { Inter } from '@next/font/google'
-
-import MainNavigation from '@/components/layout/navigation/MainNavigation'
-import Footer from '@/components/layout/footer/Footer'
-
-const inter = Inter({
-    subsets: ['latin'],
-    variable: '--font-inter',
-})
 
 const Home = () => {
     return (
@@ -24,9 +15,7 @@ const Home = () => {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <MainNavigation className={`${inter.variable} font-sans`} />
-            <main className={`${inter.variable} font-sans`}>CONTENT</main>
-            <Footer className={`${inter.variable} font-sans`} />
+            CONTENT
         </>
     )
 }
