@@ -11,9 +11,7 @@ import MobileMenuNav from './mobile/MobileMenuNav'
 
 const navigation = [
     { name: 'Dashboard', href: '#', current: true },
-    { name: 'Team', href: '#', current: false },
-    { name: 'Projects', href: '#', current: false },
-    { name: 'Calendar', href: '#', current: false },
+    { name: 'Blog', href: '/blog', current: false },
 ]
 
 type PropTypes = {
@@ -21,6 +19,7 @@ type PropTypes = {
 }
 
 const MainNavigation = ({ className }: PropTypes) => {
+    const isAuthed = false
     const displayNotificationButton = false
 
     const { width } = useWindowDimension()
@@ -29,12 +28,12 @@ const MainNavigation = ({ className }: PropTypes) => {
         <Disclosure as="nav" className={`${className} bg-gray-800`}>
             {({ open }) => (
                 <>
-                    <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-                        <div className="relative flex h-16 items-center justify-between">
+                    <div className="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
+                        <div className="relative flex items-center justify-between h-16">
                             {width < 640 ? (
                                 <MobileHamburger open={open} />
                             ) : null}
-                            <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                            <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
                                 <CompanyLogo />
                                 {width >= 640 ? (
                                     <NavMenu navigation={navigation} />
@@ -45,7 +44,7 @@ const MainNavigation = ({ className }: PropTypes) => {
                                     <NotificationButton />
                                 )}
 
-                                <ProfileButton />
+                                {isAuthed && <ProfileButton />}
                             </div>
                         </div>
                     </div>
