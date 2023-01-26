@@ -15,11 +15,17 @@ type PropTypes = {
 const MobileMenuNav = ({ navigation }: PropTypes) => {
     return (
         <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pt-2 pb-3">
-                {navigation.map((item) => (
-                    <MobileNavLink key={item.name} item={item} />
-                ))}
-            </div>
+            {({ close }) => (
+                <div className="px-2 pt-2 pb-3 space-y-1">
+                    {navigation.map((item) => (
+                        <MobileNavLink
+                            key={item.name}
+                            item={item}
+                            close={close}
+                        />
+                    ))}
+                </div>
+            )}
         </Disclosure.Panel>
     )
 }

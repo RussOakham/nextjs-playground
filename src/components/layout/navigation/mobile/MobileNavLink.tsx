@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Disclosure } from '@headlessui/react'
@@ -8,10 +9,17 @@ type PropTypes = {
         href: string
         current: boolean
     }
+    close: () => void
 }
 
-const MobileNavLink = ({ item }: PropTypes) => {
+const MobileNavLink = ({ item, close }: PropTypes) => {
     const router = useRouter()
+
+    const isActive = router.pathname === item.href
+
+    const handleClick = useCallback(() => {
+        close()
+    }, [close])
 
     return (
         <Link key={item.name} href={item.href} passHref legacyBehavior>
@@ -20,11 +28,12 @@ const MobileNavLink = ({ item }: PropTypes) => {
                 as="a"
                 href={item.href}
                 className={`${
-                    router.pathname === item.href
+                    isActive
                         ? 'bg-gray-900 text-white'
                         : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                 } block px-3 py-2 rounded-md text-base font-medium`}
                 aria-current={item.current ? 'page' : undefined}
+                onClick={handleClick}
             >
                 {item.name}
             </Disclosure.Button>
