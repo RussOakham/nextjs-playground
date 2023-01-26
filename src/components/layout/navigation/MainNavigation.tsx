@@ -14,6 +14,11 @@ const navigation = [
     { name: 'Blog', href: '/blog', current: false },
 ]
 
+const authLinks = [
+    { name: 'Login', href: '/login', current: false },
+    { name: 'Register', href: '/register', current: false },
+]
+
 type PropTypes = {
     className?: string
 }
@@ -23,6 +28,14 @@ const MainNavigation = ({ className }: PropTypes) => {
     const displayNotificationButton = false
 
     const { width } = useWindowDimension()
+
+    let mobileNavigation: { name: string; href: string; current: boolean }[]
+
+    if (isAuthed) {
+        mobileNavigation = navigation
+    } else {
+        mobileNavigation = navigation.concat(authLinks)
+    }
 
     return (
         <Disclosure as="nav" className={`${className} bg-gray-800`}>
@@ -44,13 +57,16 @@ const MainNavigation = ({ className }: PropTypes) => {
                                     <NotificationButton />
                                 )}
 
-                                {isAuthed && <ProfileButton />}
+                                {isAuthed ? (
+                                    <ProfileButton />
+                                ) : (
+                                    <NavMenu navigation={authLinks} />
+                                )}
                             </div>
                         </div>
                     </div>
-
                     {width < 640 ? (
-                        <MobileMenuNav navigation={navigation} />
+                        <MobileMenuNav navigation={mobileNavigation} />
                     ) : null}
                 </>
             )}
