@@ -1,18 +1,19 @@
 import { Fragment } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Menu, Transition } from '@headlessui/react'
 
-import tailwindClassNames from '@/helpers/tailwindClassNames'
-
 const ProfileButton = () => {
+    const router = useRouter()
+
     return (
         <Menu as="div" className="relative ml-3">
             <div>
-                <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                <Menu.Button className="flex text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                     <span className="sr-only">Open user menu</span>
                     <Image
-                        className="h-8 w-8 rounded-full"
+                        className="w-8 h-8 rounded-full"
                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                         alt=""
                         width={32}
@@ -29,45 +30,42 @@ const ProfileButton = () => {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <Menu.Item>
-                        {({ active }) => (
-                            <Link
-                                href="http://localhost:3000"
-                                className={tailwindClassNames(
-                                    active ? 'bg-gray-100' : '',
-                                    'block px-4 py-2 text-sm text-gray-700'
-                                )}
-                            >
-                                Your Profile
-                            </Link>
-                        )}
+                        <Link
+                            href="http://localhost:3000/profile"
+                            className={`${
+                                router.pathname === '/profile'
+                                    ? 'bg-gray-100'
+                                    : ''
+                            } block px-4 py-2 text-sm text-gray-700`}
+                        >
+                            Your Profile
+                        </Link>
                     </Menu.Item>
                     <Menu.Item>
-                        {({ active }) => (
-                            <Link
-                                href="http://localhost:3000"
-                                className={tailwindClassNames(
-                                    active ? 'bg-gray-100' : '',
-                                    'block px-4 py-2 text-sm text-gray-700'
-                                )}
-                            >
-                                Settings
-                            </Link>
-                        )}
+                        <Link
+                            href="http://localhost:3000/settings"
+                            className={`${
+                                router.pathname === '/settings'
+                                    ? 'bg-gray-100'
+                                    : ''
+                            } block px-4 py-2 text-sm text-gray-700`}
+                        >
+                            Settings
+                        </Link>
                     </Menu.Item>
                     <Menu.Item>
-                        {({ active }) => (
-                            <Link
-                                href="http://localhost:3000"
-                                className={tailwindClassNames(
-                                    active ? 'bg-gray-100' : '',
-                                    'block px-4 py-2 text-sm text-gray-700'
-                                )}
-                            >
-                                Sign out
-                            </Link>
-                        )}
+                        <Link
+                            href="http://localhost:3000/logout"
+                            className={`${
+                                router.pathname === '/logout'
+                                    ? 'bg-gray-100'
+                                    : ''
+                            } block px-4 py-2 text-sm text-gray-700`}
+                        >
+                            Logout
+                        </Link>
                     </Menu.Item>
                 </Menu.Items>
             </Transition>
