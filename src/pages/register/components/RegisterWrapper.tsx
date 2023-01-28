@@ -1,102 +1,133 @@
+import Image from 'next/image'
+import Link from 'next/link'
+import { FormProvider, useForm, SubmitHandler } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ErrorMessage } from '@hookform/error-message'
+
+import FormTextInput from '@/components/forms/inputs/FormTextInput'
+import ErrorText from '@/components/forms/typography/ErrorText'
+
+import { registerSchema } from '@/library/schemas/authSchemas'
+import { useEffect } from 'react'
+
+type RegistrationFormInputs = {
+    email: string
+    password: string
+    confirmPassword: string
+}
+
 const RegisterWrapper = () => {
+    const methods = useForm<RegistrationFormInputs>({
+        resolver: zodResolver(registerSchema),
+    })
+
+    const { errors } = methods.formState
+
+    const onSubmit: SubmitHandler<RegistrationFormInputs> = (data) =>
+        console.log(data)
+
+    useEffect(() => {
+        console.log(methods.formState.errors)
+    }, [methods.formState.errors])
+
     return (
-        <div className="flex flex-col justify-center min-h-full py-12 sm:px-6 lg:px-8">
+        <div className="flex flex-col justify-center min-h-full py-12 w-320 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <img
+                <Image
                     className="w-auto h-12 mx-auto"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                     alt="Your Company"
+                    width={72}
+                    height={72}
                 />
                 <h2 className="mt-6 text-3xl font-bold tracking-tight text-center text-gray-900">
-                    Sign in to your account
+                    Register for an account
                 </h2>
                 <p className="mt-2 text-sm text-center text-gray-600">
                     Or{' '}
-                    <a
-                        href="#"
+                    <Link
+                        href="/Login"
                         className="font-medium text-indigo-600 hover:text-indigo-500"
                     >
-                        start your 14-day free trial
-                    </a>
+                        Login
+                    </Link>
                 </p>
             </div>
 
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-                    <form className="space-y-6" action="#" method="POST">
-                        <div>
-                            <label
-                                htmlFor="email"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Email address
-                            </label>
-                            <div className="mt-1">
-                                <input
-                                    id="email"
-                                    name="email"
+                    <FormProvider {...methods}>
+                        <form
+                            className="space-y-6"
+                            onSubmit={methods.handleSubmit(onSubmit)}
+                        >
+                            <div>
+                                <FormTextInput
+                                    inputId="email"
+                                    inputLabel="Email Address"
                                     type="email"
-                                    autoComplete="email"
-                                    required
-                                    className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    id="email"
+                                    label="Email"
+                                    placeholder="Enter your email address"
+                                    autoComplete="on"
+                                />
+                                <ErrorMessage
+                                    errors={errors}
+                                    name="email"
+                                    render={({ message }) => (
+                                        <ErrorText>{message}</ErrorText>
+                                    )}
                                 />
                             </div>
-                        </div>
 
-                        <div>
-                            <label
-                                htmlFor="password"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Password
-                            </label>
-                            <div className="mt-1">
-                                <input
-                                    id="password"
-                                    name="password"
+                            <div>
+                                <FormTextInput
+                                    inputId="password"
+                                    inputLabel="Password"
                                     type="password"
-                                    autoComplete="current-password"
-                                    required
-                                    className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    id="password"
+                                    label="Password"
+                                    placeholder="Enter your Password"
+                                    autoComplete="off"
+                                />
+                                <ErrorMessage
+                                    errors={errors}
+                                    name="password"
+                                    render={({ message }) => (
+                                        <ErrorText>{message}</ErrorText>
+                                    )}
                                 />
                             </div>
-                        </div>
 
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                                <input
-                                    id="remember-me"
-                                    name="remember-me"
-                                    type="checkbox"
-                                    className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                            <div>
+                                <FormTextInput
+                                    inputId="confirmPassword"
+                                    inputLabel="Confirm Password"
+                                    type="password"
+                                    id="confirmPassword"
+                                    label="confirmPassword"
+                                    placeholder="Re-enter your Password"
+                                    autoComplete="off"
                                 />
-                                <label
-                                    htmlFor="remember-me"
-                                    className="block ml-2 text-sm text-gray-900"
-                                >
-                                    Remember me
-                                </label>
+                                <ErrorMessage
+                                    errors={errors}
+                                    name="confirmPassword"
+                                    render={({ message }) => (
+                                        <ErrorText>{message}</ErrorText>
+                                    )}
+                                />
                             </div>
 
-                            <div className="text-sm">
-                                <a
-                                    href="#"
-                                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                            <div>
+                                <button
+                                    type="submit"
+                                    className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 >
-                                    Forgot your password?
-                                </a>
+                                    Register
+                                </button>
                             </div>
-                        </div>
-
-                        <div>
-                            <button
-                                type="submit"
-                                className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            >
-                                Sign in
-                            </button>
-                        </div>
-                    </form>
+                        </form>
+                    </FormProvider>
 
                     <div className="mt-6">
                         <div className="relative">
@@ -113,7 +144,7 @@ const RegisterWrapper = () => {
                         <div className="grid grid-cols-3 gap-3 mt-6">
                             <div>
                                 <a
-                                    href="#"
+                                    href="/Register"
                                     className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
                                 >
                                     <span className="sr-only">
@@ -136,7 +167,7 @@ const RegisterWrapper = () => {
 
                             <div>
                                 <a
-                                    href="#"
+                                    href="/Register"
                                     className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
                                 >
                                     <span className="sr-only">
@@ -155,7 +186,7 @@ const RegisterWrapper = () => {
 
                             <div>
                                 <a
-                                    href="#"
+                                    href="/Register"
                                     className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
                                 >
                                     <span className="sr-only">
