@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FormProvider, useForm, SubmitHandler } from 'react-hook-form'
@@ -33,10 +33,6 @@ const RegisterWrapper = () => {
     const onSubmit: SubmitHandler<RegistrationFormInputs> = (data) =>
         console.log(data)
 
-    useEffect(() => {
-        console.log(methods.formState.errors)
-    }, [methods.formState.errors])
-
     return (
         <div className="flex flex-col justify-center min-h-full py-12 w-320 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -67,6 +63,7 @@ const RegisterWrapper = () => {
                         <form
                             className="space-y-6"
                             onSubmit={methods.handleSubmit(onSubmit)}
+                            noValidate
                         >
                             <div>
                                 <FormTextInput

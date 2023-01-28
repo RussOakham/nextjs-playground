@@ -1,7 +1,9 @@
 import { z } from 'zod'
 import validator from 'validator'
 
-const emailValidation = z.string().email()
+const emailValidation = z.string().email({
+    message: 'Please enter a valid email address',
+})
 const passwordValidation = z.string().min(6)
 
 export const registerSchema = z
