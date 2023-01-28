@@ -14,6 +14,7 @@ import Divider from '@/components/forms/Divider'
 import SocialLinkButton from '@/components/UX/buttons/SocialLinkButton'
 
 import { registerSchema } from '@/library/schemas/authSchemas'
+import MainButton from '@/components/UX/buttons/MainButton'
 
 type RegistrationFormInputs = {
     email: string
@@ -125,12 +126,7 @@ const RegisterWrapper = () => {
                             </div>
 
                             <div>
-                                <button
-                                    type="submit"
-                                    className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                >
-                                    Register
-                                </button>
+                                <MainButton type="submit" text="Register!" />
                             </div>
                         </form>
                     </FormProvider>
