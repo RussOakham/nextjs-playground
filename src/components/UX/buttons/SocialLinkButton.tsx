@@ -1,24 +1,25 @@
-import Link from 'next/link'
+/* eslint-disable react/jsx-no-useless-fragment */
 import { IconType } from 'react-icons'
 
 type SocialLinkButtonProps = {
-    href: string
+    onClick: () => Promise<undefined>
     label: string
     icon: IconType | JSX.Element
 }
 
-const SocialLinkButton = ({ href, label, icon }: SocialLinkButtonProps) => {
+const SocialLinkButton = ({ onClick, label, icon }: SocialLinkButtonProps) => {
     return (
         <div>
-            <Link
-                href={href}
+            <button
+                onClick={onClick}
+                type="button"
                 className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
             >
                 <>
                     <span className="sr-only">{label}</span>
                     {icon}
                 </>
-            </Link>
+            </button>
         </div>
     )
 }

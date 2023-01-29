@@ -1,5 +1,7 @@
 import { useMemo } from 'react'
 
+import { signIn } from 'next-auth/react'
+
 import { IconContext } from 'react-icons'
 import { FaFacebookF } from 'react-icons/fa'
 import { BsGithub, BsLinkedin } from 'react-icons/bs'
@@ -27,17 +29,17 @@ const RegisterWrapper = () => {
                         <div className="grid grid-cols-3 gap-3 mt-6">
                             <IconContext.Provider value={iconStyles}>
                                 <SocialLinkButton
-                                    href="https://www.facebook.com"
+                                    onClick={() => signIn()}
                                     label="Sign up with Facebook"
                                     icon={<FaFacebookF />}
                                 />
                                 <SocialLinkButton
-                                    href="https://www.github.com"
+                                    onClick={() => signIn()}
                                     label="Sign up with GitHub"
                                     icon={<BsGithub />}
                                 />
                                 <SocialLinkButton
-                                    href="https://www.linkedin.com"
+                                    onClick={() => signIn()}
                                     label="Sign up with LinkedIn"
                                     icon={<BsLinkedin />}
                                 />
