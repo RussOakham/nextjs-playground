@@ -1,18 +1,21 @@
+import Link from 'next/link'
+
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import FormTextInput from '@/components/forms/inputs/FormTextInput'
+import CheckboxInput from '@/components/forms/inputs/CheckboxInput'
 import ErrorText from '@/components/forms/typography/ErrorText'
 
 import MainButton from '@/components/UX/buttons/MainButton'
 
 import { loginSchema } from '@/library/schemas/authSchemas'
-import Link from 'next/link'
 
 export type LoginFormInputs = {
     email: string
     password: string
+    rememberMe: boolean
 }
 
 const LoginForm = () => {
@@ -70,20 +73,7 @@ const LoginForm = () => {
                 </div>
 
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                        <input
-                            id="remember-me"
-                            name="remember-me"
-                            type="checkbox"
-                            className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                        />
-                        <label
-                            htmlFor="remember-me"
-                            className="block ml-2 text-sm text-gray-900"
-                        >
-                            Remember me
-                        </label>
-                    </div>
+                    <CheckboxInput id="rememberMe" label="Remember me" />
 
                     <div className="text-sm">
                         <Link

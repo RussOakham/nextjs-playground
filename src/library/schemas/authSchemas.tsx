@@ -48,4 +48,5 @@ export const loginSchema = z.object({
                 'Password must contain at least 6 characters, 1 lowercase, 1 uppercase, 1 number and 1 symbol',
         }
     ),
+    rememberMe: z.boolean(),
 })
