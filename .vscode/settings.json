@@ -3,6 +3,8 @@
         "Authed",
         "headlessui",
         "heroicons",
-        "planetscale"
+        "planetscale",
+        "primsa",
+        "prismadb"
     ]
 }

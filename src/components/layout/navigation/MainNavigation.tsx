@@ -1,4 +1,5 @@
 import { Disclosure } from '@headlessui/react'
+import { useSession } from 'next-auth/react'
 
 import useWindowDimension from '@/hooks/useWindowDimension'
 
@@ -24,7 +25,8 @@ type PropTypes = {
 }
 
 const MainNavigation = ({ className }: PropTypes) => {
-    const isAuthed = false
+    const { data: session } = useSession()
+    const isAuthed = !!session
     const displayNotificationButton = false
 
     const { width } = useWindowDimension()
