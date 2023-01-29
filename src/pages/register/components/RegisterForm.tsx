@@ -10,6 +10,7 @@ import MainButton from '@/components/UX/buttons/MainButton'
 import { registerSchema } from '@/library/schemas/authSchemas'
 
 export type RegistrationFormInputs = {
+    username: string
     email: string
     password: string
     confirmPassword: string
@@ -31,6 +32,25 @@ const RegisterForm = () => {
                 onSubmit={methods.handleSubmit(onSubmit)}
                 noValidate
             >
+                <div>
+                    <FormTextInput
+                        inputId="username"
+                        inputLabel="Username"
+                        type="text"
+                        id="username"
+                        label="Username"
+                        placeholder="Enter a Username"
+                        autoComplete="on"
+                    />
+                    <ErrorMessage
+                        errors={errors}
+                        name="username"
+                        render={({ message }) => (
+                            <ErrorText>{message}</ErrorText>
+                        )}
+                    />
+                </div>
+
                 <div>
                     <FormTextInput
                         inputId="email"

@@ -33,7 +33,7 @@ const ProfileButton = () => {
                 <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <Menu.Item>
                         <Link
-                            href="http://localhost:3000/profile"
+                            href="/profile"
                             className={`${
                                 router.pathname === '/profile'
                                     ? 'bg-gray-100'
@@ -45,7 +45,7 @@ const ProfileButton = () => {
                     </Menu.Item>
                     <Menu.Item>
                         <Link
-                            href="http://localhost:3000/settings"
+                            href="/settings"
                             className={`${
                                 router.pathname === '/settings'
                                     ? 'bg-gray-100'
@@ -57,7 +57,7 @@ const ProfileButton = () => {
                     </Menu.Item>
                     <Menu.Item>
                         <Link
-                            href="http://localhost:3000/logout"
+                            href="/logout"
                             className={`${
                                 router.pathname === '/logout'
                                     ? 'bg-gray-100'

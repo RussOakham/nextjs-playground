@@ -1,8 +1,13 @@
 import Head from 'next/head'
 
 import Header from '@/components/layout/headers/Header'
+import { useSession } from 'next-auth/react'
 
 const Home = () => {
+    const { data: session } = useSession()
+
+    console.log('session', session)
+
     return (
         <>
             <Head>

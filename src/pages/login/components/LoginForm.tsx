@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import { signIn } from 'next-auth/react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -23,7 +24,13 @@ const LoginForm = () => {
         resolver: zodResolver(loginSchema),
     })
 
-    const onSubmit: SubmitHandler<LoginFormInputs> = (data) => console.log(data)
+    const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
+        signIn('credentials', {
+            redirect: false,
+            email: data.email,
+            password: data.password,
+        })
+    }
 
     const { errors } = methods.formState
 

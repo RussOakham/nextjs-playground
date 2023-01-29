@@ -1,6 +1,14 @@
 import { z } from 'zod'
 import validator from 'validator'
 
+const usernameValidation = z
+    .string()
+    .min(3, {
+        message: 'Username must be at least 3 characters long',
+    })
+    .max(20, {
+        message: 'Username must be at most 20 characters long',
+    })
 const emailValidation = z.string().email({
     message: 'Please enter a valid email address',
 })
@@ -8,6 +16,7 @@ const passwordValidation = z.string().min(6)
 
 export const registerSchema = z
     .object({
+        username: usernameValidation,
         email: emailValidation,
         password: passwordValidation.refine(
             (value) => {
