@@ -6,5 +6,6 @@
         "planetscale",
         "primsa",
         "prismadb"
-    ]
+    ],
+    "dotenv.enableAutocloaking": false
 }
