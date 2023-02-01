@@ -52,6 +52,7 @@ const LoginWrapper = ({
                                     }
                                     label="Sign up with Facebook"
                                     icon={<FaFacebookF />}
+                                    disabled={!providers?.facebook}
                                 />
                                 <SocialLinkButton
                                     onClick={() =>
@@ -59,6 +60,7 @@ const LoginWrapper = ({
                                     }
                                     label="Sign up with GitHub"
                                     icon={<BsGithub />}
+                                    disabled={!providers?.github}
                                 />
                                 <SocialLinkButton
                                     onClick={() =>
@@ -66,6 +68,7 @@ const LoginWrapper = ({
                                     }
                                     label="Sign up with LinkedIn"
                                     icon={<BsLinkedin />}
+                                    disabled={!providers?.linkedin}
                                 />
                             </IconContext.Provider>
                         </div>
