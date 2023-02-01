@@ -2,6 +2,8 @@ import { Fragment } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+
+import { signOut } from 'next-auth/react'
 import { Menu, Transition } from '@headlessui/react'
 
 const ProfileButton = () => {
@@ -56,8 +58,8 @@ const ProfileButton = () => {
                         </Link>
                     </Menu.Item>
                     <Menu.Item>
-                        <Link
-                            href="/logout"
+                        <button
+                            onClick={() => signOut({ callbackUrl: '/' })}
                             className={`${
                                 router.pathname === '/logout'
                                     ? 'bg-gray-100'
@@ -65,7 +67,7 @@ const ProfileButton = () => {
                             } block px-4 py-2 text-sm text-gray-700`}
                         >
                             Logout
-                        </Link>
+                        </button>
                     </Menu.Item>
                 </Menu.Items>
             </Transition>
