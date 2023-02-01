@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { getSession, GetSessionParams } from 'next-auth/react'
 
 import Header from '@/components/layout/headers/Header'
 
@@ -23,3 +24,18 @@ const index = () => {
 }
 
 export default index
+
+export async function getServerSideProps(context: GetSessionParams | undefined) {
+    const session = await getSession(context)
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            },
+        }
+    }
+    return {
+        props: { session },
+    }
+}

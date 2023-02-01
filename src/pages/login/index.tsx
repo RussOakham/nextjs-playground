@@ -5,7 +5,6 @@ import {
     getProviders,
     LiteralUnion,
 } from 'next-auth/react'
-import { getToken } from 'next-auth/jwt'
 import { BuiltInProviderType } from 'next-auth/providers'
 
 import Header from '@/components/layout/headers/Header'
@@ -51,15 +50,13 @@ export async function getServerSideProps(context: {
     res: any
     req: any
 }) {
-    const { query, res, req } = context
+    const { query } = context
     let error = ''
     if (query.error) {
         error = query.error
     }
 
     try {
-        const secret = process.env.SECRET
-        const token = await getToken({ req, secret })
         const csrfToken = await getCsrfToken(context)
 
         return {
