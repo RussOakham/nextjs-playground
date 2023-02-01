@@ -11,8 +11,15 @@ export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(primsa),
     providers: [
         EmailProvider({
-            server: { host: process.env.EMAIL_SERVER_HOST },
-            from: process.env.EMAIL_FROM,
+            server: {
+                host: process.env.SMTP_HOST,
+                port: Number(process.env.SMTP_PORT),
+                auth: {
+                    user: process.env.SMTP_USER,
+                    pass: process.env.SMTP_PASSWORD,
+                },
+            },
+            from: process.env.SMTP_FROM,
             maxAge: 14 * 24 * 60 * 60, // 14 days
         }),
         GitHubProvider({
@@ -26,6 +33,10 @@ export const authOptions: NextAuthOptions = {
         maxAge: 30 * 24 * 60 * 60, // 30 days
     },
     debug: true,
+    pages: {
+        signIn: '/login',
+        signOut: '/',
+    },
 }
 
 export default NextAuth(authOptions)

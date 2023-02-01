@@ -1,9 +1,26 @@
 import Head from 'next/head'
+import {
+    ClientSafeProvider,
+    getCsrfToken,
+    getProviders,
+    LiteralUnion,
+} from 'next-auth/react'
+import { getToken } from 'next-auth/jwt'
+import { BuiltInProviderType } from 'next-auth/providers'
 
 import Header from '@/components/layout/headers/Header'
 import LoginWrapper from './components/LoginWrapper'
 
-const Login = () => {
+type LoginProps = {
+    providers: Record<
+        LiteralUnion<BuiltInProviderType, string>,
+        ClientSafeProvider
+    > | null
+    loginError: string
+    csrfToken: string
+}
+
+const Login = ({ providers, loginError, csrfToken }: LoginProps) => {
     return (
         <>
             <Head>
@@ -17,10 +34,48 @@ const Login = () => {
             </Head>
             <Header title="Login to your Account" />
             <div className="flex items-center justify-center ">
-                <LoginWrapper />
+                <LoginWrapper
+                    providers={providers}
+                    csrfToken={csrfToken}
+                    loginError={loginError}
+                />
             </div>
         </>
     )
 }
 
 export default Login
+
+export async function getServerSideProps(context: {
+    query: any
+    res: any
+    req: any
+}) {
+    const { query, res, req } = context
+    let error = ''
+    if (query.error) {
+        error = query.error
+    }
+
+    try {
+        const secret = process.env.SECRET
+        const token = await getToken({ req, secret })
+        const csrfToken = await getCsrfToken(context)
+
+        return {
+            props: {
+                providers: await getProviders(),
+                loginError: error,
+                csrfToken,
+            },
+        }
+    } catch (e) {
+        return {
+            props: {
+                providers: await getProviders(),
+                loginError: error,
+                csrfToken: '',
+            },
+        }
+    }
+}

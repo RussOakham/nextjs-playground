@@ -1,36 +1,35 @@
-import Link from 'next/link'
-
-import { signIn } from 'next-auth/react'
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import { ClientSafeProvider, LiteralUnion } from 'next-auth/react'
+import { FormProvider, useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import FormTextInput from '@/components/forms/inputs/FormTextInput'
-import CheckboxInput from '@/components/forms/inputs/CheckboxInput'
 import ErrorText from '@/components/forms/typography/ErrorText'
 
 import MainButton from '@/components/UX/buttons/MainButton'
 
 import { loginSchema } from '@/library/schemas/authSchemas'
+import { BuiltInProviderType } from 'next-auth/providers'
 
 export type LoginFormInputs = {
     email: string
     password: string
     rememberMe: boolean
+    csrfToken: string
 }
 
-const LoginForm = () => {
+type LoginFormProps = {
+    providers: Record<
+        LiteralUnion<BuiltInProviderType, string>,
+        ClientSafeProvider
+    > | null
+    csrfToken: string
+}
+
+const LoginForm = ({ csrfToken }: LoginFormProps) => {
     const methods = useForm<LoginFormInputs>({
         resolver: zodResolver(loginSchema),
     })
-
-    const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
-        signIn('credentials', {
-            redirect: false,
-            email: data.email,
-            password: data.password,
-        })
-    }
 
     const { errors } = methods.formState
 
@@ -38,10 +37,16 @@ const LoginForm = () => {
         <FormProvider {...methods}>
             <form
                 className="space-y-6"
-                onSubmit={methods.handleSubmit(onSubmit)}
+                method="POST"
+                action="/api/auth/signin/email"
                 noValidate
             >
                 <div>
+                    <input
+                        name="csrfToken"
+                        type="hidden"
+                        defaultValue={csrfToken}
+                    />
                     <FormTextInput
                         inputId="email"
                         inputLabel="Email Address"
@@ -61,39 +66,7 @@ const LoginForm = () => {
                 </div>
 
                 <div>
-                    <FormTextInput
-                        inputId="password"
-                        inputLabel="Password"
-                        type="password"
-                        id="password"
-                        label="Password"
-                        placeholder="Enter your Password"
-                        autoComplete="off"
-                    />
-                    <ErrorMessage
-                        errors={errors}
-                        name="password"
-                        render={({ message }) => (
-                            <ErrorText>{message}</ErrorText>
-                        )}
-                    />
-                </div>
-
-                <div className="flex items-center justify-between">
-                    <CheckboxInput id="rememberMe" label="Remember me" />
-
-                    <div className="text-sm">
-                        <Link
-                            href="/forgot-password"
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
-                        >
-                            Forgot your password?
-                        </Link>
-                    </div>
-                </div>
-
-                <div>
-                    <MainButton type="submit" text="Sign in" />
+                    <MainButton type="submit" text="Sign in with Email" />
                 </div>
             </form>
         </FormProvider>

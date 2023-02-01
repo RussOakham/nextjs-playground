@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-no-useless-fragment */
+import { SignInResponse } from 'next-auth/react'
 import { IconType } from 'react-icons'
 
 type SocialLinkButtonProps = {
-    onClick: () => Promise<undefined>
+    onClick?: () => Promise<SignInResponse | undefined>
     label: string
     icon: IconType | JSX.Element
 }
