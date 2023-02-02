@@ -11,14 +11,12 @@ import MainButton from '@/components/UX/buttons/MainButton'
 import { loginSchema } from '@/library/schemas/authSchemas'
 import { BuiltInProviderType } from 'next-auth/providers'
 
-export type LoginFormInputs = {
+export type SecureEmailLoginFormInputs = {
     email: string
-    password: string
-    rememberMe: boolean
     csrfToken: string
 }
 
-type LoginFormProps = {
+type SecureEmailLoginFormProps = {
     providers: Record<
         LiteralUnion<BuiltInProviderType, string>,
         ClientSafeProvider
@@ -26,8 +24,8 @@ type LoginFormProps = {
     csrfToken: string
 }
 
-const LoginForm = ({ csrfToken }: LoginFormProps) => {
-    const methods = useForm<LoginFormInputs>({
+const SecureEmailLoginForm = ({ csrfToken }: SecureEmailLoginFormProps) => {
+    const methods = useForm<SecureEmailLoginFormInputs>({
         resolver: zodResolver(loginSchema),
     })
 
@@ -73,4 +71,4 @@ const LoginForm = ({ csrfToken }: LoginFormProps) => {
     )
 }
 
-export default LoginForm
+export default SecureEmailLoginForm

@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 import { ClientSafeProvider, LiteralUnion, signIn } from 'next-auth/react'
 import { BuiltInProviderType } from 'next-auth/providers'
@@ -13,7 +13,7 @@ import SocialLinkButton from '@/components/UX/buttons/SocialLinkButton'
 
 import Tabs from '@/components/UX/tabs/Tabs'
 import FormBanner from './FormBanner'
-import LoginForm from './LoginForm'
+import SecureEmailLoginForm from './SecureEmailLoginForm'
 
 type LoginWrapperProps = {
     providers: Record<
@@ -46,6 +46,14 @@ const LoginWrapper = ({
     loginError,
     csrfToken,
 }: LoginWrapperProps) => {
+    const [activeTab, setActiveTab] = useState(tabs[0].id)
+
+    const toggleTab = (id: number) => {
+        if (activeTab !== id) {
+            setActiveTab(id)
+        }
+    }
+
     const iconStyles = useMemo(() => ({ className: 'h-5 w-5' }), [])
 
     if (loginError) {
@@ -58,9 +66,18 @@ const LoginWrapper = ({
 
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-                    <Tabs tabs={tabs} />
+                    <Tabs
+                        tabs={tabs}
+                        activeTab={activeTab}
+                        toggleTab={toggleTab}
+                    />
 
-                    <LoginForm providers={providers} csrfToken={csrfToken} />
+                    {activeTab === 1 && (
+                        <SecureEmailLoginForm
+                            providers={providers}
+                            csrfToken={csrfToken}
+                        />
+                    )}
 
                     <div className="mt-6">
                         <Divider>Or continue with</Divider>

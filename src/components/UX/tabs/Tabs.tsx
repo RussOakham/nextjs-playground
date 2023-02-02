@@ -1,21 +1,12 @@
-import { useState } from 'react'
-
-import TabItem from './TabItem'
-import { Tab } from './TabItem'
+import TabItem, { Tab } from './TabItem'
 
 type TabsProps = {
     tabs: Tab[]
+    activeTab: number
+    toggleTab: (id: number) => void
 }
 
-const Tabs = ({ tabs }: TabsProps) => {
-    const [activeTab, setActiveTab] = useState(tabs[0].id)
-
-    const toggleTab = (id: number) => {
-        if (activeTab !== id) {
-            setActiveTab(id)
-        }
-    }
-
+const Tabs = ({ tabs, activeTab, toggleTab }: TabsProps) => {
     return (
         <div className="mb-4">
             <div className="sm:hidden">
