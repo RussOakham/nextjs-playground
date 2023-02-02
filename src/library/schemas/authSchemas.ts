@@ -14,7 +14,7 @@ const emailValidation = z.string().email({
 })
 const passwordValidation = z.string().min(6)
 
-export const registerSchema = z
+export const credentialsRegisterSchema = z
     .object({
         username: usernameValidation,
         email: emailValidation,
@@ -39,6 +39,25 @@ export const registerSchema = z
         message: 'Passwords do not match',
         path: ['confirmPassword'],
     })
+
+export const credentialsLoginSchema = z.object({
+    email: emailValidation,
+    password: passwordValidation.refine(
+        (value) => {
+            return validator.isStrongPassword(value, {
+                minLength: 6,
+                minLowercase: 1,
+                minUppercase: 1,
+                minNumbers: 1,
+                minSymbols: 1,
+            })
+        },
+        {
+            message:
+                'Password must contain at least 6 characters, 1 lowercase, 1 uppercase, 1 number and 1 symbol',
+        }
+    ),
+})
 
 export const loginSchema = z.object({
     email: emailValidation,

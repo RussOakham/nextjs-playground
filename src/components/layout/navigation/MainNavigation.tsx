@@ -17,7 +17,7 @@ const navigation = [
 
 const authLinks = [
     { name: 'Login', href: '/login', current: false },
-    // { name: 'Register', href: '/register', current: true },
+    { name: 'Register', href: '/register', current: true },
 ]
 
 type PropTypes = {

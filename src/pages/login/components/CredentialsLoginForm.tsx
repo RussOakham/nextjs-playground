@@ -7,50 +7,34 @@ import ErrorText from '@/components/forms/typography/ErrorText'
 
 import MainButton from '@/components/UX/buttons/MainButton'
 
-import { credentialsRegisterSchema } from '@/library/schemas/authSchemas'
+import { credentialsLoginSchema } from '@/library/schemas/authSchemas'
 
-export type RegistrationFormInputs = {
-    username: string
+export type CredentialsLoginFormInputs = {
     email: string
     password: string
-    confirmPassword: string
 }
 
-const RegisterForm = () => {
-    const methods = useForm<RegistrationFormInputs>({
-        resolver: zodResolver(credentialsRegisterSchema),
-    })
-
-    const onSubmit: SubmitHandler<RegistrationFormInputs> = (data) =>
-        console.log(data)
+const CredentialsLoginForm = () => {
+    const methods = useForm<CredentialsLoginFormInputs>({
+        resolver: zodResolver(credentialsLoginSchema),
+    });
 
     const { errors } = methods.formState
+
+
+    const onSubmit: SubmitHandler<CredentialsLoginFormInputs> = (data) =>
+        console.log(data)
+
+
     return (
         <FormProvider {...methods}>
             <form
                 className="space-y-6"
+                method="POST"
                 onSubmit={methods.handleSubmit(onSubmit)}
+                // action="/api/auth/signin/credentials"
                 noValidate
             >
-                <div>
-                    <FormTextInput
-                        inputId="username"
-                        inputLabel="Username"
-                        type="text"
-                        id="username"
-                        label="Username"
-                        placeholder="Enter a Username"
-                        autoComplete="on"
-                    />
-                    <ErrorMessage
-                        errors={errors}
-                        name="username"
-                        render={({ message }) => (
-                            <ErrorText>{message}</ErrorText>
-                        )}
-                    />
-                </div>
-
                 <div>
                     <FormTextInput
                         inputId="email"
@@ -90,30 +74,12 @@ const RegisterForm = () => {
                 </div>
 
                 <div>
-                    <FormTextInput
-                        inputId="confirmPassword"
-                        inputLabel="Confirm Password"
-                        type="password"
-                        id="confirmPassword"
-                        label="confirmPassword"
-                        placeholder="Re-enter your Password"
-                        autoComplete="off"
-                    />
-                    <ErrorMessage
-                        errors={errors}
-                        name="confirmPassword"
-                        render={({ message }) => (
-                            <ErrorText>{message}</ErrorText>
-                        )}
-                    />
-                </div>
-
-                <div>
-                    <MainButton type="submit" text="Register!" />
+                    <MainButton type="submit" text="Login!" />
                 </div>
             </form>
+
         </FormProvider>
     )
 }
 
-export default RegisterForm
+export default CredentialsLoginForm

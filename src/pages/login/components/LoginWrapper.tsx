@@ -10,10 +10,11 @@ import { InboxIcon, UserIcon } from '@heroicons/react/20/solid'
 
 import Divider from '@/components/forms/Divider'
 import SocialLinkButton from '@/components/UX/buttons/SocialLinkButton'
-
 import Tabs from '@/components/UX/tabs/Tabs'
+
 import FormBanner from './FormBanner'
 import SecureEmailLoginForm from './SecureEmailLoginForm'
+import CredentialsLoginForm from './CredentialsLoginForm'
 
 type LoginWrapperProps = {
     providers: Record<
@@ -78,6 +79,8 @@ const LoginWrapper = ({
                             csrfToken={csrfToken}
                         />
                     )}
+
+                    {activeTab === 2 && <CredentialsLoginForm />}
 
                     <div className="mt-6">
                         <Divider>Or continue with</Divider>

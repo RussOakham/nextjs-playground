@@ -17,7 +17,7 @@ const FormBanner = () => {
             <p className="mt-2 text-sm text-center text-gray-600">
                 Or{' '}
                 <Link
-                    href="/Register"
+                    href="/register"
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
                     Register
