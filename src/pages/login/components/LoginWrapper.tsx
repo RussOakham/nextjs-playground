@@ -6,6 +6,7 @@ import { BuiltInProviderType } from 'next-auth/providers'
 import { IconContext } from 'react-icons'
 import { FaFacebookF } from 'react-icons/fa'
 import { BsGithub, BsLinkedin } from 'react-icons/bs'
+import { InboxIcon, UserIcon } from '@heroicons/react/20/solid'
 
 import Divider from '@/components/forms/Divider'
 import SocialLinkButton from '@/components/UX/buttons/SocialLinkButton'
@@ -22,6 +23,23 @@ type LoginWrapperProps = {
     loginError: string
     csrfToken: string
 }
+
+const tabs = [
+    {
+        id: 1,
+        name: 'Secure Email',
+        href: '#secure-email',
+        icon: UserIcon,
+        active: true,
+    },
+    {
+        id: 2,
+        name: 'User Login',
+        href: '#user-login',
+        icon: InboxIcon,
+        active: false,
+    },
+]
 
 const LoginWrapper = ({
     providers,
@@ -40,7 +58,7 @@ const LoginWrapper = ({
 
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-                    <Tabs />
+                    <Tabs tabs={tabs} />
 
                     <LoginForm providers={providers} csrfToken={csrfToken} />
 

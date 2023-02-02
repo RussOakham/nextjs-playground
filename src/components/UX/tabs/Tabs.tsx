@@ -1,27 +1,13 @@
 import { useState } from 'react'
 
-import { InboxIcon, UserIcon } from '@heroicons/react/20/solid'
-import { fromPairs } from 'lodash'
-import Tab from './Tab'
+import TabItem from './TabItem'
+import { Tab } from './TabItem'
 
-const tabs = [
-    {
-        id: 1,
-        name: 'Secure Email',
-        href: '#secure-email',
-        icon: UserIcon,
-        active: true,
-    },
-    {
-        id: 2,
-        name: 'User Login',
-        href: '#user-login',
-        icon: InboxIcon,
-        active: false,
-    },
-]
+type TabsProps = {
+    tabs: Tab[]
+}
 
-const Tabs = () => {
+const Tabs = ({ tabs }: TabsProps) => {
     const [activeTab, setActiveTab] = useState(tabs[0].id)
 
     const toggleTab = (id: number) => {
@@ -55,7 +41,7 @@ const Tabs = () => {
                         aria-label="Tabs"
                     >
                         {tabs.map((tab) => (
-                            <Tab
+                            <TabItem
                                 key={tab.name}
                                 tab={tab}
                                 toggleTab={toggleTab}

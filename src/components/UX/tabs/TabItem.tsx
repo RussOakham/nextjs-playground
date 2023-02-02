@@ -1,16 +1,18 @@
+export type Tab = {
+    id: number
+    name: string
+    href: string
+    icon: any
+    active: boolean
+}
+
 type TabProps = {
-    tab: {
-        id: number
-        name: string
-        href: string
-        icon: any
-        active: boolean
-    }
+    tab: Tab
     toggleTab: (id: number) => void
     activeTab: number
 }
 
-const Tab = ({ tab, toggleTab, activeTab }: TabProps) => {
+const TabItem = ({ tab, toggleTab, activeTab }: TabProps) => {
     const isActive = tab.id === activeTab
 
     return (
@@ -42,4 +44,4 @@ const Tab = ({ tab, toggleTab, activeTab }: TabProps) => {
     )
 }
 
-export default Tab
+export default TabItem
