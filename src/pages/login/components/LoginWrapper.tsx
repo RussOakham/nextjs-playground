@@ -10,6 +10,7 @@ import { BsGithub, BsLinkedin } from 'react-icons/bs'
 import Divider from '@/components/forms/Divider'
 import SocialLinkButton from '@/components/UX/buttons/SocialLinkButton'
 
+import Tabs from '@/components/UX/tabs/Tabs'
 import FormBanner from './FormBanner'
 import LoginForm from './LoginForm'
 
@@ -39,6 +40,8 @@ const LoginWrapper = ({
 
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
+                    <Tabs />
+
                     <LoginForm providers={providers} csrfToken={csrfToken} />
 
                     <div className="mt-6">
