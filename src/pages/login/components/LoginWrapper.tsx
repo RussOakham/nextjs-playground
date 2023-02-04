@@ -80,7 +80,7 @@ const LoginWrapper = ({
                         />
                     )}
 
-                    {activeTab === 2 && <CredentialsLoginForm />}
+                    {activeTab === 2 && <CredentialsLoginForm csrfToken={csrfToken} />}
 
                     <div className="mt-6">
                         <Divider>Or continue with</Divider>

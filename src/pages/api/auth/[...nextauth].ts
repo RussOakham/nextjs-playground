@@ -1,15 +1,74 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import EmailProvider from 'next-auth/providers/email'
-// import CredentialsProvider from 'next-auth/providers/credentials'
+import CredentialsProvider from 'next-auth/providers/credentials'
 // import GoogleProvider from 'next-auth/providers/google'
 import GitHubProvider from 'next-auth/providers/github'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
 import primsa from '../../../library/prisma/prismadb'
 
+export type Credentials =
+    | Record<'username' | 'email' | 'password', string>
+    | undefined
+
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(primsa),
     providers: [
+        CredentialsProvider({
+            name: 'Credentials',
+            credentials: {
+                username: {
+                    label: 'Username',
+                    type: 'text',
+                },
+                email: { label: 'Email', type: 'email' },
+                password: { label: 'Password', type: 'password' },
+            },
+            authorize: async (credentials: Credentials) => {
+                if (!credentials?.email && !credentials?.password) {
+                    throw new Error('Email and Password are required')
+                }
+
+                const user = await primsa.user.findFirst({
+                    where: {
+                        OR: [
+                            { username: credentials?.username },
+                            { email: credentials?.email },
+                        ],
+                    },
+                })
+
+                if (!user) {
+                    if (!credentials?.password) {
+                        throw new Error('Password is required')
+                    }
+
+                    if (!credentials?.email) {
+                        throw new Error('Email is required')
+                    }
+                    const newUser = await primsa.user.create({
+                        data: {
+                            username: credentials?.username || '',
+                            email: credentials.email,
+                            password: credentials.password,
+                        },
+                    })
+                    return newUser
+                }
+
+                const isPasswordCorrect = await primsa.user.findFirst({
+                    where: {
+                        password: credentials?.password,
+                    },
+                })
+
+                if (!isPasswordCorrect) {
+                    throw new Error('Password is incorrect')
+                }
+
+                return user
+            },
+        }),
         EmailProvider({
             server: {
                 host: process.env.SMTP_HOST,
@@ -34,7 +93,7 @@ export const authOptions: NextAuthOptions = {
     },
     debug: true,
     pages: {
-        signIn: '/login',
+        signIn: '/Login',
         signOut: '/',
     },
 }

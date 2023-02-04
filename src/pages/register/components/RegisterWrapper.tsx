@@ -82,7 +82,7 @@ const RegisterWrapper = ({
                     )}
 
                     {activeTab === 2 && (
-                        <RegisterForm />
+                        <RegisterForm csrfToken={csrfToken} />
                     )}
 
 

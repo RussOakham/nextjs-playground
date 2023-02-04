@@ -1,6 +1,7 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { signIn } from 'next-auth/react'
 
 import FormTextInput from '@/components/forms/inputs/FormTextInput'
 import ErrorText from '@/components/forms/typography/ErrorText'
@@ -16,13 +17,24 @@ export type RegistrationFormInputs = {
     confirmPassword: string
 }
 
-const RegisterForm = () => {
+type RegisterFormProps = {
+    csrfToken: string
+}
+
+const RegisterForm = ({ csrfToken }: RegisterFormProps) => {
     const methods = useForm<RegistrationFormInputs>({
         resolver: zodResolver(credentialsRegisterSchema),
     })
 
-    const onSubmit: SubmitHandler<RegistrationFormInputs> = (data) =>
-        console.log(data)
+    const onSubmit: SubmitHandler<RegistrationFormInputs> = (data) => {
+        signIn('credentials', {
+            redirect: false,
+            csrfToken,
+            username: data.username,
+            email: data.email,
+            password: data.password,
+        })
+    }
 
     const { errors } = methods.formState
     return (
@@ -32,6 +44,7 @@ const RegisterForm = () => {
                 onSubmit={methods.handleSubmit(onSubmit)}
                 noValidate
             >
+                <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
                 <div>
                     <FormTextInput
                         inputId="username"

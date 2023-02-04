@@ -1,6 +1,7 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { signIn } from 'next-auth/react'
 
 import FormTextInput from '@/components/forms/inputs/FormTextInput'
 import ErrorText from '@/components/forms/typography/ErrorText'
@@ -9,12 +10,16 @@ import MainButton from '@/components/UX/buttons/MainButton'
 
 import { credentialsLoginSchema } from '@/library/schemas/authSchemas'
 
+type CredentialsLoginFormProps = {
+    csrfToken: string
+}
+
 export type CredentialsLoginFormInputs = {
     email: string
     password: string
 }
 
-const CredentialsLoginForm = () => {
+const CredentialsLoginForm = ({ csrfToken }: CredentialsLoginFormProps) => {
     const methods = useForm<CredentialsLoginFormInputs>({
         resolver: zodResolver(credentialsLoginSchema),
     });
@@ -22,8 +27,14 @@ const CredentialsLoginForm = () => {
     const { errors } = methods.formState
 
 
-    const onSubmit: SubmitHandler<CredentialsLoginFormInputs> = (data) =>
-        console.log(data)
+    const onSubmit: SubmitHandler<CredentialsLoginFormInputs> = (data) => {
+        signIn('credentials', {
+            redirect: false,
+            csrfToken,
+            email: data.email,
+            password: data.password,
+        })
+    }
 
 
     return (
@@ -35,6 +46,7 @@ const CredentialsLoginForm = () => {
                 // action="/api/auth/signin/credentials"
                 noValidate
             >
+                <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
                 <div>
                     <FormTextInput
                         inputId="email"
