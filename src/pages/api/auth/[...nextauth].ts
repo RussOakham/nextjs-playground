@@ -23,8 +23,9 @@ export const authOptions: NextAuthOptions = {
                 },
                 email: { label: 'Email', type: 'email' },
                 password: { label: 'Password', type: 'password' },
+                pathname: { label: 'Pathname', type: 'text' },
             },
-            authorize: async (credentials: Credentials) => {
+            authorize: async (credentials) => {
                 if (!credentials?.email && !credentials?.password) {
                     throw new Error('Email and Password are required')
                 }
@@ -39,6 +40,10 @@ export const authOptions: NextAuthOptions = {
                 })
 
                 if (!user) {
+                    if (credentials?.pathname !== '/register') {
+                        throw new Error('User not found')
+                    }
+
                     if (!credentials?.password) {
                         throw new Error('Password is required')
                     }
@@ -54,6 +59,10 @@ export const authOptions: NextAuthOptions = {
                         },
                     })
                     return newUser
+                }
+
+                if (credentials?.pathname !== '/login') {
+                    throw new Error('User already exists')
                 }
 
                 const isPasswordCorrect = await primsa.user.findFirst({

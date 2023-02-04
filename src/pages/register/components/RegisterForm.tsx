@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -22,6 +23,7 @@ type RegisterFormProps = {
 }
 
 const RegisterForm = ({ csrfToken }: RegisterFormProps) => {
+    const { pathname } = useRouter()
     const methods = useForm<RegistrationFormInputs>({
         resolver: zodResolver(credentialsRegisterSchema),
     })
@@ -30,6 +32,7 @@ const RegisterForm = ({ csrfToken }: RegisterFormProps) => {
         signIn('credentials', {
             redirect: false,
             csrfToken,
+            pathname,
             username: data.username,
             email: data.email,
             password: data.password,
@@ -44,7 +47,9 @@ const RegisterForm = ({ csrfToken }: RegisterFormProps) => {
                 onSubmit={methods.handleSubmit(onSubmit)}
                 noValidate
             >
+
                 <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+                <input name="pathname" type="hidden" defaultValue={pathname} />
                 <div>
                     <FormTextInput
                         inputId="username"

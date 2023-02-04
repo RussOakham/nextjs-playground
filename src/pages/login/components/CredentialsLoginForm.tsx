@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -10,6 +11,7 @@ import MainButton from '@/components/UX/buttons/MainButton'
 
 import { credentialsLoginSchema } from '@/library/schemas/authSchemas'
 
+
 type CredentialsLoginFormProps = {
     csrfToken: string
 }
@@ -20,6 +22,7 @@ export type CredentialsLoginFormInputs = {
 }
 
 const CredentialsLoginForm = ({ csrfToken }: CredentialsLoginFormProps) => {
+    const { pathname } = useRouter()
     const methods = useForm<CredentialsLoginFormInputs>({
         resolver: zodResolver(credentialsLoginSchema),
     });
@@ -31,6 +34,7 @@ const CredentialsLoginForm = ({ csrfToken }: CredentialsLoginFormProps) => {
         signIn('credentials', {
             redirect: false,
             csrfToken,
+            pathname,
             email: data.email,
             password: data.password,
         })
@@ -47,6 +51,7 @@ const CredentialsLoginForm = ({ csrfToken }: CredentialsLoginFormProps) => {
                 noValidate
             >
                 <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+                <input name="pathname" type="hidden" defaultValue={pathname} />
                 <div>
                     <FormTextInput
                         inputId="email"
