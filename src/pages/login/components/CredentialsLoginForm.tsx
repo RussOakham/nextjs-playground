@@ -9,6 +9,8 @@ import ErrorText from '@/components/forms/typography/ErrorText'
 
 import MainButton from '@/components/UX/buttons/MainButton'
 
+import useToast from '@/library/hooks/useToast'
+
 import { credentialsLoginSchema } from '@/library/schemas/authSchemas'
 
 
@@ -23,6 +25,7 @@ export type CredentialsLoginFormInputs = {
 
 const CredentialsLoginForm = ({ csrfToken }: CredentialsLoginFormProps) => {
     const { pathname } = useRouter()
+    const { addToast } = useToast()
     const methods = useForm<CredentialsLoginFormInputs>({
         resolver: zodResolver(credentialsLoginSchema),
     });
@@ -52,12 +55,25 @@ const CredentialsLoginForm = ({ csrfToken }: CredentialsLoginFormProps) => {
                     type: 'manual',
                     message: response.error,
                 })
+
+                addToast(
+                    response.error,
+                    'Please enter the correct password',
+                    'Error',
+                )
             }
         }
 
-        if (response?.status !== 200 && response?.status !== 401) {
+        if (response?.status !== 200 && response?.status !== 401 && response?.error) {
             console.log('response', response)
+
+            addToast(
+                'Server Error',
+                'Please try again later',
+                'Error',
+            )
         }
+
     }
 
 
@@ -67,7 +83,6 @@ const CredentialsLoginForm = ({ csrfToken }: CredentialsLoginFormProps) => {
                 className="space-y-6"
                 method="POST"
                 onSubmit={methods.handleSubmit(onSubmit)}
-                // action="/api/auth/signin/credentials"
                 noValidate
             >
                 <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
@@ -118,5 +133,6 @@ const CredentialsLoginForm = ({ csrfToken }: CredentialsLoginFormProps) => {
         </FormProvider>
     )
 }
+
 
 export default CredentialsLoginForm

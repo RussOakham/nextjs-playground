@@ -1,4 +1,4 @@
-import { getCurrentYear } from '@/helpers/dateTimes'
+import { getCurrentYear } from '@/library/helpers/dateTimes'
 
 const CopyWrite = () => {
     const year = getCurrentYear()
@@ -7,7 +7,7 @@ const CopyWrite = () => {
 
     return (
         <div className="mt-8 md:order-1 md:mt-0">
-            <p className="text-center text-xs leading-5 text-white">
+            <p className="text-xs leading-5 text-center text-white">
                 &copy; {content}
             </p>
         </div>

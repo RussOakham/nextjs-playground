@@ -1,7 +1,7 @@
 import { Disclosure } from '@headlessui/react'
 import { useSession } from 'next-auth/react'
 
-import useWindowDimension from '@/hooks/useWindowDimension'
+import useWindowDimension from '@/library/hooks/useWindowDimension'
 
 import CompanyLogo from './CompanyLogo'
 import NotificationButton from './NotificationButton'
