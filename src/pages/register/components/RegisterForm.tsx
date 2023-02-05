@@ -24,7 +24,8 @@ type RegisterFormProps = {
 }
 
 const RegisterForm = ({ csrfToken }: RegisterFormProps) => {
-    const { pathname } = useRouter()
+    const router = useRouter()
+    const { pathname } = router
     const { addToast } = useToast()
     const methods = useForm<RegistrationFormInputs>({
         resolver: zodResolver(credentialsRegisterSchema),
@@ -38,7 +39,12 @@ const RegisterForm = ({ csrfToken }: RegisterFormProps) => {
             username: data.username,
             email: data.email,
             password: data.password,
+            callbackUrl: `${window.location.origin}/account-created`
         })
+
+        if (response?.status === 200 && response?.url) {
+            router.push(response?.url)
+        }
 
         if (response?.status === 401) {
             if (response?.error === 'User already exists') {
@@ -48,7 +54,6 @@ const RegisterForm = ({ csrfToken }: RegisterFormProps) => {
                 })
             }
         }
-
 
         if (response?.status !== 200 && response?.status !== 401) {
             addToast(

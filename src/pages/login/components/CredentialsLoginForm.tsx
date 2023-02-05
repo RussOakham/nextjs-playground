@@ -22,7 +22,8 @@ export type CredentialsLoginFormInputs = {
 }
 
 const CredentialsLoginForm = ({ csrfToken }: CredentialsLoginFormProps) => {
-    const { pathname } = useRouter()
+    const router = useRouter()
+    const { pathname } = router
     const { addToast } = useToast()
     const methods = useForm<CredentialsLoginFormInputs>({
         resolver: zodResolver(credentialsLoginSchema),
@@ -39,6 +40,10 @@ const CredentialsLoginForm = ({ csrfToken }: CredentialsLoginFormProps) => {
             email: data.email,
             password: data.password,
         })
+
+        if (response?.status === 200) {
+            router.push('/profile')
+        }
 
         if (response?.status === 401) {
             if (response?.error === 'User not Found') {

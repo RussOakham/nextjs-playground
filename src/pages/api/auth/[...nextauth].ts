@@ -104,6 +104,7 @@ export const authOptions: NextAuthOptions = {
     pages: {
         signIn: '/Login',
         signOut: '/',
+        newUser: '/account-created',
     },
 }
 
