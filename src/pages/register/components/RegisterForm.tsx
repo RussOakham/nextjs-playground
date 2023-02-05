@@ -28,8 +28,8 @@ const RegisterForm = ({ csrfToken }: RegisterFormProps) => {
         resolver: zodResolver(credentialsRegisterSchema),
     })
 
-    const onSubmit: SubmitHandler<RegistrationFormInputs> = (data) => {
-        signIn('credentials', {
+    const onSubmit: SubmitHandler<RegistrationFormInputs> = async (data) => {
+        const response = await signIn('credentials', {
             redirect: false,
             csrfToken,
             pathname,
@@ -37,6 +37,20 @@ const RegisterForm = ({ csrfToken }: RegisterFormProps) => {
             email: data.email,
             password: data.password,
         })
+
+        if (response?.status === 401) {
+            if (response?.error === 'User already exists') {
+                methods.setError('email', {
+                    type: 'manual',
+                    message: response.error,
+                })
+            }
+        }
+
+
+        if (response?.status !== 200 && response?.status !== 401) {
+            console.log('response', response)
+        }
     }
 
     const { errors } = methods.formState

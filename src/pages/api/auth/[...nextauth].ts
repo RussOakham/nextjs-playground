@@ -41,7 +41,7 @@ export const authOptions: NextAuthOptions = {
 
                 if (!user) {
                     if (credentials?.pathname !== '/register') {
-                        throw new Error('User not found')
+                        throw new Error('User not Found')
                     }
 
                     if (!credentials?.password) {

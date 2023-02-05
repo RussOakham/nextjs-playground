@@ -30,14 +30,34 @@ const CredentialsLoginForm = ({ csrfToken }: CredentialsLoginFormProps) => {
     const { errors } = methods.formState
 
 
-    const onSubmit: SubmitHandler<CredentialsLoginFormInputs> = (data) => {
-        signIn('credentials', {
+    const onSubmit: SubmitHandler<CredentialsLoginFormInputs> = async (data) => {
+        const response = await signIn('credentials', {
             redirect: false,
             csrfToken,
             pathname,
             email: data.email,
             password: data.password,
         })
+
+        if (response?.status === 401) {
+            if (response?.error === 'User not Found') {
+                methods.setError('email', {
+                    type: 'manual',
+                    message: response.error,
+                })
+            }
+
+            if (response?.error === 'Password is incorrect') {
+                methods.setError('password', {
+                    type: 'manual',
+                    message: response.error,
+                })
+            }
+        }
+
+        if (response?.status !== 200 && response?.status !== 401) {
+            console.log('response', response)
+        }
     }
 
 
