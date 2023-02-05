@@ -6,8 +6,9 @@ import { signIn } from 'next-auth/react'
 
 import FormTextInput from '@/components/forms/inputs/FormTextInput'
 import ErrorText from '@/components/forms/typography/ErrorText'
-
 import MainButton from '@/components/UX/buttons/MainButton'
+
+import useToast from '@/library/hooks/useToast'
 
 import { credentialsRegisterSchema } from '@/library/schemas/authSchemas'
 
@@ -24,6 +25,7 @@ type RegisterFormProps = {
 
 const RegisterForm = ({ csrfToken }: RegisterFormProps) => {
     const { pathname } = useRouter()
+    const { addToast } = useToast()
     const methods = useForm<RegistrationFormInputs>({
         resolver: zodResolver(credentialsRegisterSchema),
     })
@@ -49,7 +51,11 @@ const RegisterForm = ({ csrfToken }: RegisterFormProps) => {
 
 
         if (response?.status !== 200 && response?.status !== 401) {
-            console.log('response', response)
+            addToast(
+                'Server Error',
+                'Please try again later',
+                'Error',
+            )
         }
     }
 

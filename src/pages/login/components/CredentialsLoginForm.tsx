@@ -6,13 +6,11 @@ import { signIn } from 'next-auth/react'
 
 import FormTextInput from '@/components/forms/inputs/FormTextInput'
 import ErrorText from '@/components/forms/typography/ErrorText'
-
 import MainButton from '@/components/UX/buttons/MainButton'
 
 import useToast from '@/library/hooks/useToast'
 
 import { credentialsLoginSchema } from '@/library/schemas/authSchemas'
-
 
 type CredentialsLoginFormProps = {
     csrfToken: string
@@ -55,18 +53,10 @@ const CredentialsLoginForm = ({ csrfToken }: CredentialsLoginFormProps) => {
                     type: 'manual',
                     message: response.error,
                 })
-
-                addToast(
-                    response.error,
-                    'Please enter the correct password',
-                    'Error',
-                )
             }
         }
 
         if (response?.status !== 200 && response?.status !== 401 && response?.error) {
-            console.log('response', response)
-
             addToast(
                 'Server Error',
                 'Please try again later',
