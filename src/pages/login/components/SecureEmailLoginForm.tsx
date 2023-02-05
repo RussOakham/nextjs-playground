@@ -10,6 +10,7 @@ import MainButton from '@/components/UX/buttons/MainButton'
 
 import { loginSchema } from '@/library/schemas/authSchemas'
 import { BuiltInProviderType } from 'next-auth/providers'
+import { useRouter } from 'next/router'
 
 export type SecureEmailLoginFormInputs = {
     email: string
@@ -25,11 +26,18 @@ type SecureEmailLoginFormProps = {
 }
 
 const SecureEmailLoginForm = ({ csrfToken }: SecureEmailLoginFormProps) => {
+    const { pathname } = useRouter()
     const methods = useForm<SecureEmailLoginFormInputs>({
         resolver: zodResolver(loginSchema),
     })
 
     const { errors } = methods.formState
+
+    let buttonText: string = 'Sign in with Email';
+
+    if (pathname === '/register') {
+        buttonText = 'Register with Email'
+    }
 
     return (
         <FormProvider {...methods}>
@@ -64,7 +72,7 @@ const SecureEmailLoginForm = ({ csrfToken }: SecureEmailLoginFormProps) => {
                 </div>
 
                 <div>
-                    <MainButton type="submit" text="Sign in with Email" />
+                    <MainButton type="submit" text={buttonText} />
                 </div>
             </form>
         </FormProvider>

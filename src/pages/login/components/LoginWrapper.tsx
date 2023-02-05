@@ -62,10 +62,10 @@ const LoginWrapper = ({
     }
 
     return (
-        <div className="flex flex-col justify-center min-h-full py-12 w-320 sm:px-6 lg:px-8">
+        <div className="flex flex-col justify-center min-h-full py-8 w-320 sm:px-6 lg:px-8">
             <FormBanner />
 
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
                     <Tabs
                         tabs={tabs}

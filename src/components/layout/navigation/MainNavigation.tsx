@@ -3,12 +3,12 @@ import { useSession } from 'next-auth/react'
 
 import useWindowDimension from '@/library/hooks/useWindowDimension'
 
-import CompanyLogo from './CompanyLogo'
 import NotificationButton from './NotificationButton'
 import ProfileButton from './ProfileButton'
 import NavMenu from './desktop/NavMenu'
 import MobileHamburger from './mobile/MobileHamburger'
 import MobileMenuNav from './mobile/MobileMenuNav'
+import LogoVideo from './LogoVideo'
 
 const navigation = [
     { name: 'Dashboard', href: '/', current: true },
@@ -49,7 +49,7 @@ const MainNavigation = ({ className }: PropTypes) => {
                                 <MobileHamburger open={open} />
                             ) : null}
                             <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
-                                <CompanyLogo />
+                                <LogoVideo />
                                 {width >= 640 ? (
                                     <NavMenu navigation={navigation} />
                                 ) : null}

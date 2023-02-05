@@ -13,7 +13,7 @@ type PropTypes = {
 const NavMenu = ({ navigation }: PropTypes) => {
     return (
         <div className="hidden sm:ml-6 sm:block">
-            <div className="flex space-x-4">
+            <div className="flex items-center h-full space-x-4">
                 {navigation.map((item) => (
                     <NavLink key={item.name} item={item} />
                 ))}
