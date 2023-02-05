@@ -38,8 +38,8 @@ const tabs = [
     },
     {
         id: 2,
-        name: 'User Login',
-        href: '#user-login',
+        name: 'User Sign Up',
+        href: '#user-sign-up',
         icon: InboxIcon,
         active: false,
     },
