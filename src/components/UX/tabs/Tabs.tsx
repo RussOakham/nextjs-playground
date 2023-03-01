@@ -18,7 +18,7 @@ const Tabs = ({ tabs, activeTab, toggleTab }: TabsProps) => {
                     id="tabs"
                     name="tabs"
                     className="block w-full border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500"
-                    defaultValue={tabs.find((tab) => tab.active).id}
+                    defaultValue={tabs.find((tab) => tab.active)?.id}
                 >
                     {tabs.map((tab) => (
                         <option key={tab.name}>{tab.name}</option>
