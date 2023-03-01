@@ -4,8 +4,13 @@
         "airbnb",
         "airbnb/hooks",
         "airbnb-typescript",
+        "plugin:react/recommended",
         "plugin:react/jsx-runtime",
+        "plugin:react-hooks/recommended",
+        "plugin:jsx-a11y/recommended",
         "plugin:import/recommended",
+        // "plugin:@typescript-eslint/recommended",
+        // "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "prettier"
     ],
     "ignorePatterns": ["tailwind.config.js"],
@@ -14,9 +19,9 @@
         "ecmaVersion": 12,
         "sourceType": "module",
         "project": "./tsconfig.json",
-        "createDefaultProgram": true
+        "createDefaultProgram": true,
+        "files": ["*.ts", ".tsx", "*.js", "*.jsx"]
     },
-    "plugins": ["react", "react-hooks", "jsx-a11y"],
     "rules": {
         "arrow-body-style": "off",
         "import/no-extraneous-dependencies": "off",
