@@ -91,8 +91,8 @@ export const authOptions: NextAuthOptions = {
             maxAge: 14 * 24 * 60 * 60, // 14 days
         }),
         GitHubProvider({
-            clientId: process.env.GITHUB_CLIENT_ID,
-            clientSecret: process.env.GITHUB_CLIENT_SECRET,
+            clientId: process.env.GITHUB_CLIENT_ID ?? '',
+            clientSecret: process.env.GITHUB_CLIENT_SECRET ?? '',
         }),
     ],
     secret: process.env.SECRET,
